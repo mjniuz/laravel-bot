@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Line\LineService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -11,13 +12,22 @@ use Illuminate\Routing\Controller as BaseController;
 
 class StartController extends BaseController
 {
-    public function __construct()
+    protected $line;
+    public function __construct(LineService $line)
     {
-
+        $this->line = $line;
     }
 
     public function start(Request $request){
-        Log::critical(json_encode($request->all()));
+        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(env('LINE_CHANNEL_ACCESS_TOKEN'));
+        $bot        = new \LINE\LINEBot($httpClient, ['channelSecret' => env('LINE_CHANNEL_SECRET')]);
+
+        $iMessage   = $this->line->identityMessage($request->get('events'));
+        if($iMessage['status'] !== true){
+            Log::critical(json_encode([$request->all(), $iMessage]));
+        }
+
+        $response   = $bot->replyText($iMessage['replyToken'], 'hello! ' . $iMessage['data']);
 
         return response()->json([
             'status'    => 'ok'
