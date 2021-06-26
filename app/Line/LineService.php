@@ -95,6 +95,24 @@ class LineService{
         ];
     }
 
+    public function userInformation($lineUserId = null){
+        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(env('LINE_CHANNEL_ACCESS_TOKEN'));
+        $bot        = new \LINE\LINEBot($httpClient, ['channelSecret' => env('LINE_CHANNEL_SECRET')]);
+        $response = $bot->getProfile($lineUserId);
+
+        if ($response->isSucceeded()) {
+            $profile    = $response->getJSONDecodedBody();
+
+            return [
+                'name'      => $profile['displayName'],
+                'picture'   => $profile['pictureUrl'],
+                'status'    => $profile['statusMessage']
+            ];
+        }
+
+        return false;
+    }
+
 
     private function _validateEvents($events = []){
         if(!is_array($events)){

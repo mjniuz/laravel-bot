@@ -15,11 +15,33 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('line_id')->unique();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('picture');
+            $table->string('gender')->default('');
+            $table->timestamp('is_open_chat')->nullable();
+
+            $table->timestamps();
+        });
+
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->id();
+            $table->string('a_line_id');
+            $table->string('b_line_id');
+            $table->timestamp('leave_at')->nullable();
+            $table->integer('total_reminder')->default(0);
+
+            $table->timestamps();
+        });
+
+        Schema::create('chats', function (Blueprint $table) {
+            $table->id();
+            $table->integer('room_id');
+            $table->string('line_id');
+            $table->string('reply_token');
+            $table->string('message_type');
+            $table->string('message');
+
             $table->timestamps();
         });
     }
