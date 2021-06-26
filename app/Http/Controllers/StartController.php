@@ -17,6 +17,6 @@ class StartController extends BaseController
     }
 
     public function start(Request $request){
-        Log::critical('wew');
+        Log::critical($request->all());
     }
 }
