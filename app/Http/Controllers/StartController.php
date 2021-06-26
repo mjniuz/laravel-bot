@@ -25,7 +25,7 @@ class StartController extends BaseController
         $events     = $request->get('events');
         $iMessage   = $this->line->identityMessage($events);
         if($iMessage['status'] !== true){
-            Log::critical(json_encode([$events[0]->type, $iMessage]));
+            Log::critical(json_encode([$events[0]['type'], $iMessage]));
         }
 
         $response   = $bot->replyText($iMessage['replyToken'], 'hello! ' . $iMessage['data']);
