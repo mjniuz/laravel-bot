@@ -31,7 +31,7 @@ class LineService{
         }
 
         if(count($events) == 1 AND !empty($events[0]['type'])){
-            $type   = $events[0]->message->type;
+            $type   = $events[0]['message']['type'];
 
             switch ($type){
                 case 'text':
