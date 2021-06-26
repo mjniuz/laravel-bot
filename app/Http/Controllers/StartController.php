@@ -18,5 +18,9 @@ class StartController extends BaseController
 
     public function start(Request $request){
         Log::critical($request->all());
+
+        return response()->json([
+            'status'    => 'ok'
+        ]);
     }
 }
