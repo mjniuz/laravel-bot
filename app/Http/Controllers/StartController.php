@@ -23,6 +23,7 @@ class StartController extends BaseController
         $bot        = new \LINE\LINEBot($httpClient, ['channelSecret' => env('LINE_CHANNEL_SECRET')]);
 
         $events     = $request->get('events');
+        Log::critical(json_encode($events[0]['type']));
         $iMessage   = $this->line->identityMessage($events);
         if($iMessage['status'] !== true){
             Log::critical(json_encode([$events[0]['type'], $iMessage]));

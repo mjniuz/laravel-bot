@@ -8,7 +8,7 @@ class LineService{
             return $this->_validateEvents($events);
         }
 
-        if(!empty($events[0]->type)){
+        if(!empty($events[0]['type'])){
             /**
              * Type:
              * follow
@@ -19,7 +19,7 @@ class LineService{
              * video
              * sticker
              */
-            return $events[0]->type;
+            return $events[0]['type'];
         }
 
         return false;
@@ -30,7 +30,7 @@ class LineService{
             return $this->_validateEvents($events);
         }
 
-        if(count($events) == 1 AND !empty($events[0]->type)){
+        if(count($events) == 1 AND !empty($events[0]['type'])){
             $type   = $events[0]->message->type;
 
             switch ($type){
@@ -38,8 +38,8 @@ class LineService{
                     return [
                         'status'    => true,
                         'type'      => 'text',
-                        'data'      => $events[0]->message->text,
-                        'replyToken'    => $events[0]->replyToken
+                        'data'      => $events[0]['message']['text'],
+                        'replyToken'    => $events[0]['replyToken']
                     ];
 
                 default:
@@ -62,8 +62,8 @@ class LineService{
             return $this->_validateEvents($events);
         }
 
-        if(count($events) == 1 AND !empty($events[0]->type)){
-            if($events[0]->type !== 'message'){
+        if(count($events) == 1 AND !empty($events[0]['type'])){
+            if($events[0]['type'] !== 'message'){
                 return [
                     'status'    => false,
                     'message'   => "type not a message"
@@ -77,7 +77,7 @@ class LineService{
                     return [
                         'status'    => true,
                         'type'      => 'user',
-                        'data'      => $events[0]->source->userId
+                        'data'      => $events[0]['source']['userId']
                     ];
 
                 default:
