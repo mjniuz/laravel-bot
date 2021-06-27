@@ -75,7 +75,7 @@ class LineService{
                 $count              = 0;
                 for($count =0; $count <5; $count++){
                     // Waiting 5 loop time to get opponent, if joined it will return
-                    $room               = $this->room->findById($findJoinRoom->id);
+                    $room               = $this->room->findById($findJoinRoom['data']->id);
                     if($room->b_line_id == '' AND is_null($room->leave_at)){
                         sleep(10);
                         if($count > 5){
