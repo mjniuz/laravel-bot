@@ -160,7 +160,7 @@ class LineService{
             $this->room->leaveChat($isActiveRoom->id);
 
             // send message self
-            $this->_sendMessage($user->line_id, 'text', 'Anda telah keluar dari chat room');
+            $this->_sendMessage($user->line_id, 'text', $this->builder->leaveMessage());
 
             if(!is_null($opponentLineId)){
                 // leave message to opponent
