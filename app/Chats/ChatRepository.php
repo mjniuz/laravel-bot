@@ -2,8 +2,9 @@
 namespace App\Chats;
 
 class ChatRepository{
-    public function findLastChatLineUserId($lineUserId = null){
+    public function findLastChatLineUserId($roomId = null, $lineUserId = null){
         return Chats::with([])
+            ->where('room_id', $roomId)
             ->where('line_id', $lineUserId)
             ->orderBy('id','desc')
             ->first();

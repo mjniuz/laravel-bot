@@ -58,13 +58,13 @@ class RoomRepository{
         ];
     }
 
-    public function leaveChat($lineUserId = null){
-        $user   = $this->findById($lineUserId);
-        if(!$user){
+    public function leaveChat($roomId = null){
+        $room   = $this->findById($roomId);
+        if(!$room){
             return false;
         }
 
-        $user->is_open_chat     = $isOpen ? date("Y-m-d H:i:s") : null;
-        $user->save();
+        $room->leave_at     = date("Y-m-d H:i:s");
+        $room->save();
     }
 }
