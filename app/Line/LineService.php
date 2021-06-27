@@ -310,7 +310,7 @@ class LineService{
             return [
                 'name'      => $profile['displayName'],
                 'picture'   => $profile['pictureUrl'],
-                'status'    => $profile['statusMessage']
+                'status'    => !empty($profile['statusMessage']) ? $profile['statusMessage'] : ''
             ];
         }
 
