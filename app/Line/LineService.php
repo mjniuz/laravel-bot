@@ -301,7 +301,10 @@ class LineService{
             ];
         }
 
-        return false;
+        return [
+            'status'    => false,
+            'message'   => 'no success get profile ' . json_decode($response)
+        ];
     }
 
 
@@ -313,7 +316,10 @@ class LineService{
             ];
         }
 
-        return true;
+        return [
+            'status'    => true,
+            'message'   => "valid event"
+        ];
     }
 
     private function _sendMessage($lineId, $type, $message){
