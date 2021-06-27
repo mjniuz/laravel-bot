@@ -78,13 +78,6 @@ class LineService{
                     $room               = $this->room->findById($findJoinRoom['data']->id);
                     if($room->b_line_id == '' AND is_null($room->leave_at)){
                         sleep(10);
-                        if($count > 5){
-                            $this->room->leaveChat($room->id);
-                            $this->_sendMessage($user->line_id, 'text', $this->builder->opponentNotFound());
-                            sleep(1);
-
-                            return $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
-                        }
                         $this->_sendMessage($user->line_id, 'text', $this->builder->randomWait());
                     }else{
                         return [
@@ -92,6 +85,14 @@ class LineService{
                             'message'   => 'Joined successfully'
                         ];
                     }
+                }
+
+                if($count >= 5){
+                    $this->room->leaveChat($room->id);
+                    $this->_sendMessage($user->line_id, 'text', $this->builder->opponentNotFound());
+                    sleep(1);
+
+                    return $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
                 }
             }
 
