@@ -213,7 +213,7 @@ class LineService{
                 ];
             }
 
-            $type   = $events[0]->source->type;
+            $type   = $events[0]['source']['type'];
 
             switch ($type){
                 case 'user':
