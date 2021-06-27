@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea5da9c2-0324-4927-abbd-2e117057d337" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Line/MessageBuilderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Line/MessageBuilderService.php" afterDir="false" />
-    </list>
+    <list default="true" id="ea5da9c2-0324-4927-abbd-2e117057d337" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Line/LineService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="274" column="57" selection-start-line="274" selection-start-column="49" selection-end-line="274" selection-end-column="57" />
+            <state relative-caret-position="180">
+              <caret line="173" column="33" lean-forward="true" selection-start-line="173" selection-start-column="33" selection-end-line="173" selection-end-column="33" />
               <folding>
                 <element signature="e#27#56#0#PHP" expanded="true" />
               </folding>
@@ -67,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Line/MessageBuilderService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="38" column="16" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="16" />
+            <state relative-caret-position="259">
+              <caret line="44" column="13" lean-forward="true" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -136,8 +133,8 @@
         <option value="$PROJECT_DIR$/app/Chats/ChatRepository.php" />
         <option value="$PROJECT_DIR$/app/Rooms/RoomRepository.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/StartController.php" />
-        <option value="$PROJECT_DIR$/app/Line/LineService.php" />
         <option value="$PROJECT_DIR$/app/Line/MessageBuilderService.php" />
+        <option value="$PROJECT_DIR$/app/Line/LineService.php" />
       </list>
     </option>
   </component>
@@ -377,15 +374,16 @@
       <option name="presentableId" value="Default" />
       <updated>1624674634020</updated>
       <workItem from="1624674636086" duration="31688000" />
-      <workItem from="1624773181942" duration="5139000" />
+      <workItem from="1624773181942" duration="5387000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36827000" />
+    <option name="totallyTimeSpent" value="37075000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1680" height="1025" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25274727" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -611,16 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Line/LineService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="274" column="57" selection-start-line="274" selection-start-column="49" selection-end-line="274" selection-end-column="57" />
-          <folding>
-            <element signature="e#27#56#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/linecorp/line-bot-sdk/src/LINEBot/TemplateActionBuilder/PostbackTemplateActionBuilder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
@@ -637,8 +625,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Line/MessageBuilderService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="38" column="16" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="16" />
+        <state relative-caret-position="259">
+          <caret line="44" column="13" lean-forward="true" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Line/LineService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="173" column="33" lean-forward="true" selection-start-line="173" selection-start-column="33" selection-end-line="173" selection-end-column="33" />
+          <folding>
+            <element signature="e#27#56#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
