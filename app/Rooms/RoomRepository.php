@@ -20,6 +20,17 @@ class RoomRepository{
         return $availableRoom;
     }
 
+    public function findWaitingRoom($lineUserId){
+        $activeRoom  = Rooms::with([])
+            ->whereNull('leave_at')
+            ->where('a_line_id', $lineUserId)
+            ->where('b_line_id','<>', '')
+            ->orderBy('id','desc')
+            ->first();
+
+        return $activeRoom;
+    }
+
     public function findActiveRoom($lineUserId){
         $activeRoom  = Rooms::with([])
             ->whereNull('leave_at')

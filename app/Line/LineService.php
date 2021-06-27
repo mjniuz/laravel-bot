@@ -152,6 +152,12 @@ class LineService{
             return $this->_sendMessage($opponentLineId, $type, $message);
         }
 
+        // still waiting for opponent
+        $stillWaitingOpponent   = $this->room->findWaitingRoom($user->line_id);
+        if($stillWaitingOpponent){
+            return $this->_sendMessage($user->line_id, 'text', $this->builder->stillWaiting());
+        }
+
         // if not in active room and new user
         return $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
     }
