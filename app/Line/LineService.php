@@ -42,16 +42,71 @@ class LineService{
             case 'message':
                 return $this->_processMessage($events, $user);
             case 'image':
-                break;
+                return $this->_sendMessage($user->line_id, 'text', $this->builder->notSupportedMessage());
             case 'audio':
-                break;
+                return $this->_sendMessage($user->line_id, 'text', $this->builder->notSupportedMessage());
             case 'video':
-                break;
+                return $this->_sendMessage($user->line_id, 'text', $this->builder->notSupportedMessage());
             case 'sticker':
-                break;
+                return $this->_sendMessage($user->line_id, 'text', $this->builder->notSupportedMessage());
             case 'postback':
-                break;
+                return $this->_postbackProcess($events, $user);
+            default:
+                return $this->_sendMessage($user->line_id, 'text', $this->builder->notSupportedMessage());
         }
+    }
+
+    private function _postbackProcess($events, $user){
+        $messageData    = $this->_identityMessage($events);
+        if($messageData['data'] == false){
+            return $messageData;
+        }
+
+        $postback   = $messageData['data'];
+        if($postback == 'searching'){
+            // find available room or create it if no one
+            $findJoinRoom  = $this->room->createJoinRoom($user->line_id);
+
+            if($findJoinRoom['is_create'] === true){
+                // create new room, need to wait the opponent
+                $messageNewRoom     = $this->builder->createRoom();
+                $this->_sendMessage($user->line_id, 'text', $messageNewRoom);
+
+                $count              = 0;
+                for($count =0; $count <5; $count++){
+                    // Waiting 5 loop time to get opponent, if joined it will return
+                    $room               = $this->room->findById($findJoinRoom->id);
+                    if($room->b_line_id == '' AND is_null($room->leave_at)){
+                        sleep(10);
+                        if($count > 5){
+                            $this->room->leaveChat($room->id);
+                            $this->_sendMessage($user->line_id, 'text', $this->builder->opponentNotFound());
+                            sleep(1);
+
+                            return $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
+                        }
+                        return $this->_sendMessage($user->line_id, 'text', $this->builder->randomWait());
+                    }else{
+                        return [
+                            'status'    => true,
+                            'message'   => 'Joined successfully'
+                        ];
+                    }
+                }
+            }
+
+            // Joined available room
+            $joinedMsg  = $this->builder->gotAFriend();
+            $this->_sendMessage($user->line_id, 'confirm', $joinedMsg);
+
+            // get opponent ID
+            $opponentLineId = ($findJoinRoom->a_line_id == $user->line_id) ? $findJoinRoom->b_line_id : $findJoinRoom->a_line_id;
+
+            // send message to opponent too
+            return $this->_sendMessage($opponentLineId, 'confirm', $joinedMsg);
+        }
+
+        return $this->_sendMessage($user->line_id, 'text', $this->builder->nothingReply());
     }
 
     private function _processMessage($events, $user){
@@ -65,33 +120,24 @@ class LineService{
         $type       = $messageData['type'];
 
         // Is in active room mode
-        $isActiveRoom   = $this->findActiveRoom($user->line_id);
+        $isActiveRoom   = $this->room->findActiveRoom($user->line_id);
         if($isActiveRoom){
-            // get opponent chat
+            // get opponent ID
             $opponentLineId = ($isActiveRoom->a_line_id == $user->line_id) ? $isActiveRoom->b_line_id : $isActiveRoom->a_line_id;
-
-            // Find latest opponent replyToken
-            $latestChat     = $this->chat->findLastChatLineUserId($isActiveRoom->id, $opponentLineId);
-            if(!$latestChat){
-                return [
-                    'status'    => false,
-                    'message'   => 'something wrong in latest opponent chat not found ' .  json_encode($events)
-                ];
-            }
 
             if(in_array($message, ['/leave','/exit','/keluar','leave','exit','keluar'])){
                 // Leave chat room
                 $this->room->leaveChat($isActiveRoom->id);
 
                 // send message self
-                $this->_sendMessage($replyToken, 'text', 'Anda telah keluar dari chat room');
+                $this->_sendMessage($user->line_id, 'text', 'Anda telah keluar dari chat room');
 
                 // leave message to opponent
-                $this->_sendMessage($latestChat->reply_token, 'text', 'Yahhh teman chat kamu sudah keluar, coba buat chat room random lagi aja ya!');
+                $this->_sendMessage($opponentLineId, 'text', 'Yahhh teman chat kamu sudah keluar, coba buat chat room random lagi aja ya!');
 
                 sleep(1);
-                $this->_sendMessage($replyToken, 'builder', $this->builder->introButton());
-                $this->_sendMessage($latestChat->reply_token, 'builder', $this->builder->leaveButton());
+                $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
+                $this->_sendMessage($opponentLineId, 'builder', $this->builder->leaveButton());
 
                 return [
                     'status'    => true,
@@ -103,8 +149,12 @@ class LineService{
             $this->chat->createChat($isActiveRoom->id, $user->line_id, $replyToken, $type, $message);
 
             // send original message to opponent
-            return $this->_sendMessage($latestChat->reply_token, $type, $message);
+            return $this->_sendMessage($opponentLineId, $type, $message);
         }
+
+        // if not in active room and new user
+
+
         return true;
     }
 
@@ -131,6 +181,13 @@ class LineService{
                         'status'    => true,
                         'type'      => 'text',
                         'data'      => $events[0]['message']['text'],
+                        'replyToken'    => $events[0]['replyToken']
+                    ];
+                case 'postback':
+                    return [
+                        'status'    => true,
+                        'type'      => 'postback',
+                        'data'      => $events[0]['message']['data'],
                         'replyToken'    => $events[0]['replyToken']
                     ];
 
@@ -213,16 +270,11 @@ class LineService{
         return true;
     }
 
-    private function _sendMessage($replyToken, $type, $message){
+    private function _sendMessage($lineId, $type, $message){
         $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(env('LINE_CHANNEL_ACCESS_TOKEN'));
         $bot        = new \LINE\LINEBot($httpClient, ['channelSecret' => env('LINE_CHANNEL_SECRET')]);
 
-
-        if($type == 'builder'){
-            $message    = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder('', $message);
-        }
-
-        $response   = $bot->replyText($replyToken, $message);
+        $response   = $bot->pushMessage($lineId, $message);
 
 
         if ($response->isSucceeded()) {

@@ -3,22 +3,67 @@
 namespace App\Line;
 
 class MessageBuilderService{
+    public function notSupportedMessage(){
+        $text   = "Sorry untuk saat ini hanya bisa ngirim pesan teks biasa aja...";
+        $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text);
+
+        return $msgResponse;
+    }
+
+    public function opponentNotFound(){
+        $text   = "Yahh... sorry nih kamu ga dapetin temen curcol random, coba lagi nanti yah...";
+        $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text);
+
+        return $msgResponse;
+    }
+
+    public function randomWait(){
+        $items   = [
+            'Tunggu yah, aku masih nyariin temen kesepian kyk kamu juga, bentar lagi kok...',
+            'Temen curcolmu belum ketemu nih, tapi tunggu ya masih aku cariin, biar kamu ga kesepian...',
+            'Aku ngerti kamu lagi kesepian kok, jadi tunggu yah aku masih nyari temen buat kamu...',
+            'Temen randommu belum nongol, masih aku usahain cari ya, tggu bentaran aja...',
+            'Masih nungguin kamu dapet temen curcol nih, beberapa saat lagi ya...'
+        ];
+
+        $text   = $items[array_rand($items)];
+        $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text);
+
+        return $msgResponse;
+
+    }
+
     public function gotAFriend(){
+        // Confirm
         $title          = "Yey, kamu udh dapet temen random, mulai ngobrol aja. Balas /leave untuk keluar";
         $actions        = [
             [
                 'type'  => 'message',
                 'label' => 'Say Hello!',
-                'text'  => 'Hi, salam kenal, gue mau curhat nih'
+                'text'  => 'Hi, salam kenal'
             ],
             [
                 'type'  => 'message',
                 'label' => 'Kenalin diri',
-                'text'  => 'Hi... nih gue orang yg baik loh, mau jadi temen curcol ga?'
+                'text'  => 'Hi... nih gue orang yg baik loh'
             ]
         ];
         $buildTemplate  = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder($title, $actions);
         $msgResponse    = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder($title,$buildTemplate);
+
+        return $msgResponse;
+    }
+
+    public function createRoom(){
+        $title          = "Kamu udh sukses bikin room random, sekarang cukup nungguin si dia join ke room kamu...";
+        $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($title);
+
+        return $msgResponse;
+    }
+
+    public function nothingReply(){
+        $title          = "Okay kita santai dulu, nanti kalau mau cari temen curcol random, chat aku lagi aja ya...";
+        $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($title);
 
         return $msgResponse;
     }

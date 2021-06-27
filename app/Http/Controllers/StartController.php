@@ -19,16 +19,11 @@ class StartController extends BaseController
     }
 
     public function start(Request $request){
-        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(env('LINE_CHANNEL_ACCESS_TOKEN'));
-        $bot        = new \LINE\LINEBot($httpClient, ['channelSecret' => env('LINE_CHANNEL_SECRET')]);
-
         $events     = $request->get('events');
-        $iMessage   = $this->line->identityMessage($events);
+        $iMessage   = $this->line->start($events);
         if($iMessage['status'] !== true){
             Log::critical(json_encode([$events, $iMessage]));
         }
-
-        $response   = $bot->replyText($iMessage['replyToken'], 'hello! ' . $iMessage['data']);
 
         return response()->json([
             'status'    => 'ok'
