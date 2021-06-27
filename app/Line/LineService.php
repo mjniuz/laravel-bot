@@ -76,9 +76,10 @@ class LineService{
             return $this->_sendMessage($user->line_id, 'text', $this->builder->haveRoomAlready());
         }
 
-        // find available room or create it if no one
-        $findJoinRoom  = $this->room->createJoinRoom($user->line_id);
         if($postback == 'searching'){
+            // find available room or create it if no one
+            $findJoinRoom  = $this->room->createJoinRoom($user->line_id);
+
             if($findJoinRoom['is_create'] === true){
                 // create new room, need to wait the opponent
                 $messageNewRoom     = $this->builder->createRoom();
@@ -113,7 +114,7 @@ class LineService{
             $this->_sendMessage($user->line_id, 'confirm', $joinedMsg);
 
             // get opponent ID
-            $opponentLineId = ($findJoinRoom->a_line_id == $user->line_id) ? $findJoinRoom->b_line_id : $findJoinRoom->a_line_id;
+            $opponentLineId = ($findJoinRoom['data']->a_line_id == $user->line_id) ? $findJoinRoom['data']->b_line_id : $findJoinRoom['data']->a_line_id;
 
             // send message to opponent too
             return $this->_sendMessage($opponentLineId, 'confirm', $joinedMsg);
