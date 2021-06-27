@@ -4,6 +4,7 @@ namespace App\Line;
 use App\Chats\ChatRepository;
 use App\Rooms\RoomRepository;
 use App\Users\UserRepository;
+use Log;
 
 class LineService{
     protected $user, $room, $chat, $builder;
