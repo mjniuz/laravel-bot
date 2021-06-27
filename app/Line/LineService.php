@@ -85,7 +85,7 @@ class LineService{
 
                             return $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
                         }
-                        return $this->_sendMessage($user->line_id, 'text', $this->builder->randomWait());
+                        $this->_sendMessage($user->line_id, 'text', $this->builder->randomWait());
                     }else{
                         return [
                             'status'    => true,
