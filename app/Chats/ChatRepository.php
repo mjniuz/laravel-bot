@@ -15,7 +15,7 @@ class ChatRepository{
         $chat->room_id      = $roomId;
         $chat->line_id      = $lineUserId;
         $chat->reply_token  = $replyToken;
-        $chat->type         = $type;
+        $chat->message_type = $type;
         $chat->message      = $message;
         $chat->save();
 
