@@ -140,7 +140,7 @@ class LineService{
         // still waiting for opponent
         $stillWaitingOpponent   = $this->room->findWaitingRoom($user->line_id);
         if($stillWaitingOpponent){
-            $isWannaLeave   = $this->_isWannaLeave($isActiveRoom, $user, $message);
+            $isWannaLeave   = $this->_isWannaLeave($stillWaitingOpponent, $user, $message);
             // But wanna leave
             if($isWannaLeave['data']){
                 return $isWannaLeave;
