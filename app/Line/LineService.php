@@ -148,7 +148,7 @@ class LineService{
             $this->chat->createChat($isActiveRoom->id, $user->line_id, $replyToken, $type, $message);
 
             // send original message to opponent
-            return $this->_sendMessage($opponentLineId, $type, $message);
+            return $this->_sendMessage($opponentLineId, $type, $this->builder->customMessage($message));
         }
 
         // still waiting for opponent

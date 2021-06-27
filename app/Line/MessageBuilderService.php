@@ -3,6 +3,13 @@
 namespace App\Line;
 
 class MessageBuilderService{
+    public function customMessage($message){
+        $text   = $message;
+        $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text);
+
+        return $msgResponse;
+    }
+
     public function notSupportedMessage(){
         $text   = "Sorry untuk saat ini hanya bisa ngirim pesan teks biasa aja...";
         $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text);
