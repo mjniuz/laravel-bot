@@ -181,6 +181,13 @@ class LineService{
                         'data'      => $events[0]['message']['text'],
                         'replyToken'    => $events[0]['replyToken']
                     ];
+                case 'message':
+                    return [
+                        'status'    => true,
+                        'type'      => 'message',
+                        'data'      => $events[0]['message']['text'],
+                        'replyToken'    => $events[0]['replyToken']
+                    ];
                 case 'postback':
                     return [
                         'status'    => true,
