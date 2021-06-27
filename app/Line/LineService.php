@@ -167,6 +167,7 @@ class LineService{
     }
 
     private function _isWannaLeave($isActiveRoom, $user, $message, $opponentLineId = null){
+        $message    = strtolower($message);
         if(in_array($message, ['/leave','/exit','/keluar','leave','exit','keluar'])){
             // Leave chat room
             $this->room->leaveChat($isActiveRoom->id);
