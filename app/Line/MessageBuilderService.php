@@ -48,6 +48,10 @@ class MessageBuilderService{
                 'text'  => 'Hi... nih gue orang yg baik loh'
             ]
         ];
+        $postbackAction = [];
+        foreach ($actions as $action){
+            $postbackAction[] = new \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder($action['label'],$action['data']);
+        }
         $buildTemplate  = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder($title, $actions);
         $msgResponse    = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder($title,$buildTemplate);
 
@@ -94,7 +98,11 @@ class MessageBuilderService{
         $imgRatio       = 'rectangle';
         $imageSize      = 'cover';
         $imageBackgroundColor   = '#FFFFFF';
-        $buildTemplate  = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder($title, $text, $image, $actions, $imgRatio, $imageSize, $imageBackgroundColor);
+        $postbackAction = [];
+        foreach ($actions as $action){
+            $postbackAction[] = new \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder($action['label'],$action['data']);
+        }
+        $buildTemplate  = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder($title, $text, $image, $postbackAction, $imgRatio, $imageSize, $imageBackgroundColor);
         $msgResponse    = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder($title,$buildTemplate);
 
         return $msgResponse;
@@ -119,7 +127,11 @@ class MessageBuilderService{
         $imgRatio       = 'rectangle';
         $imageSize      = 'cover';
         $imageBackgroundColor   = '#FFFFFF';
-        $buildTemplate  = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder($title, $text, $image, $actions, $imgRatio, $imageSize, $imageBackgroundColor);
+        $postbackAction = [];
+        foreach ($actions as $action){
+            $postbackAction[] = new \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder($action['label'],$action['data']);
+        }
+        $buildTemplate  = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder($title, $text, $image, $postbackAction, $imgRatio, $imageSize, $imageBackgroundColor);
         $msgResponse    = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder($title,$buildTemplate);
 
 
