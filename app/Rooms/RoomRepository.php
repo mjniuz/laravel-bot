@@ -24,7 +24,7 @@ class RoomRepository{
         $activeRoom  = Rooms::with([])
             ->whereNull('leave_at')
             ->where('a_line_id', $lineUserId)
-            ->where('b_line_id','<>', '')
+            ->where('b_line_id', '')
             ->orderBy('id','desc')
             ->first();
 
