@@ -65,7 +65,7 @@ class LineService{
         $postback   = $messageData['data'];
 
         // already have available room
-        $availableRoom  = $this->room->findAvailableRoom($user->line_id);
+        $availableRoom  = $this->room->findWaitingRoom($user->line_id);
         if($availableRoom){
             return $this->_sendMessage($user->line_id, 'text', $this->builder->stillWaiting());
         }
