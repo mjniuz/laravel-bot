@@ -72,6 +72,13 @@ class MessageBuilderService{
         return $msgResponse;
     }
 
+    public function friendLeaved(){
+        $title          = 'Yahhh teman chat kamu sudah keluar, coba buat chat room random lagi aja ya!';
+        $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($title);
+
+        return $msgResponse;
+    }
+
     public function stillWaiting(){
         $title          = "Aku masih cariin temen random buat kamu yah, tunggu aja, kalau mau keluar dan cari temen random baru cukup balas /leave";
         $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($title);

@@ -163,7 +163,7 @@ class LineService{
 
             if(!is_null($opponentLineId)){
                 // leave message to opponent
-                $this->_sendMessage($opponentLineId, 'text', 'Yahhh teman chat kamu sudah keluar, coba buat chat room random lagi aja ya!');
+                $this->_sendMessage($opponentLineId, 'text', $this->builder->friendLeaved());
                 $this->_sendMessage($opponentLineId, 'builder', $this->builder->leaveButton());
             }
 
