@@ -34,14 +34,20 @@ class LineService{
             ];
         }
 
-        $eventName  = $this->_identityEvent($events);
+        $eventName      = $this->_identityEvent($events);
+
         switch ($eventName){
             case 'follow':
                 break;
             case 'unfollow':
                 break;
             case 'message':
-                return $this->_processMessage($events, $user);
+                $typeInside     = $events[0]['message']['type'];
+                if($typeInside == 'text'){
+                    return $this->_processMessage($events, $user);
+                }
+                // no supported
+                return $this->_sendMessage($user->line_id, 'text', $this->builder->notSupportedMessage());
             case 'image':
                 return $this->_sendMessage($user->line_id, 'text', $this->builder->notSupportedMessage());
             case 'audio':
@@ -214,10 +220,6 @@ class LineService{
 
         if(count($events) == 1 AND !empty($events[0]['type'])){
             $type   = $events[0]['type'];
-
-            if(empty($events[0]['message']['text'])){
-                Log::critical($events);
-            }
             switch ($type){
                 case 'text':
                     return [
