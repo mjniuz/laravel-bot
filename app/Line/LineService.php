@@ -16,13 +16,13 @@ class LineService{
     }
 
     public function start($events = []){
-        if($this->_validateEvents($events) !== true){
+        if($this->_validateEvents($events)['status'] !== true){
             return $this->_validateEvents($events);
         }
 
         // Check user detail
         $userData   = $this->_identityUser($events);
-        if($userData['status']== false){
+        if($userData['status'] == false){
             return $userData;
         }
         $user       = $this->user->createUpdateUser($userData['data']);
@@ -200,7 +200,7 @@ class LineService{
     }
 
     private function _identityMessage($events = []){
-        if($this->_validateEvents($events) !== true){
+        if($this->_validateEvents($events)['status'] !== true){
             return $this->_validateEvents($events);
         }
 
