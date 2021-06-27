@@ -94,10 +94,10 @@ class LineService{
 
                 $count              = 0;
                 for($count =0; $count <5; $count++){
+                    sleep(10);
                     // Waiting 5 loop time to get opponent, if joined it will return
                     $room               = $this->room->findById($findJoinRoom['data']->id);
                     if($room->b_line_id == '' AND is_null($room->leave_at)){
-                        sleep(10);
                         $this->_sendMessage($user->line_id, 'text', $this->builder->randomWait());
                     }else{
                         return [
