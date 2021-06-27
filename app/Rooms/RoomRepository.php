@@ -44,7 +44,7 @@ class RoomRepository{
         }else{
             $availableRoom            = new Rooms();
             $availableRoom->a_line_id = $lineUserId;
-            $availableRoom->b_line_id = null;
+            $availableRoom->b_line_id = '';
             $availableRoom->leave_at  = null;
             $availableRoom->save();
 
