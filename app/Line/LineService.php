@@ -134,7 +134,7 @@ class LineService{
             $opponentLineId = ($isActiveRoom->a_line_id == $user->line_id) ? $isActiveRoom->b_line_id : $isActiveRoom->a_line_id;
 
             $isWannaLeave   = $this->_isWannaLeave($isActiveRoom, $user, $message, $opponentLineId);
-            if($isWannaLeave['data']){
+            if($isWannaLeave['status']){
                 return $isWannaLeave;
             }
 
