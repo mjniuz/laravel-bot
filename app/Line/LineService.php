@@ -125,24 +125,9 @@ class LineService{
             // get opponent ID
             $opponentLineId = ($isActiveRoom->a_line_id == $user->line_id) ? $isActiveRoom->b_line_id : $isActiveRoom->a_line_id;
 
-            if(in_array($message, ['/leave','/exit','/keluar','leave','exit','keluar'])){
-                // Leave chat room
-                $this->room->leaveChat($isActiveRoom->id);
-
-                // send message self
-                $this->_sendMessage($user->line_id, 'text', 'Anda telah keluar dari chat room');
-
-                // leave message to opponent
-                $this->_sendMessage($opponentLineId, 'text', 'Yahhh teman chat kamu sudah keluar, coba buat chat room random lagi aja ya!');
-
-                sleep(1);
-                $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
-                $this->_sendMessage($opponentLineId, 'builder', $this->builder->leaveButton());
-
-                return [
-                    'status'    => true,
-                    'message'   => 'leave chat success'
-                ];
+            $isWannaLeave   = $this->_isWannaLeave($isActiveRoom, $user, $message, $opponentLineId);
+            if($isWannaLeave['data']){
+                return $isWannaLeave;
             }
 
             // insert chat from original message
@@ -155,11 +140,46 @@ class LineService{
         // still waiting for opponent
         $stillWaitingOpponent   = $this->room->findWaitingRoom($user->line_id);
         if($stillWaitingOpponent){
+            $isWannaLeave   = $this->_isWannaLeave($isActiveRoom, $user, $message);
+            // But wanna leave
+            if($isWannaLeave['data']){
+                return $isWannaLeave;
+            }
+
             return $this->_sendMessage($user->line_id, 'text', $this->builder->stillWaiting());
         }
 
         // if not in active room and new user
         return $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
+    }
+
+    private function _isWannaLeave($isActiveRoom, $user, $message, $opponentLineId = null){
+        if(in_array($message, ['/leave','/exit','/keluar','leave','exit','keluar'])){
+            // Leave chat room
+            $this->room->leaveChat($isActiveRoom->id);
+
+            // send message self
+            $this->_sendMessage($user->line_id, 'text', 'Anda telah keluar dari chat room');
+
+            if(!is_null($opponentLineId)){
+                // leave message to opponent
+                $this->_sendMessage($opponentLineId, 'text', 'Yahhh teman chat kamu sudah keluar, coba buat chat room random lagi aja ya!');
+                $this->_sendMessage($opponentLineId, 'builder', $this->builder->leaveButton());
+            }
+
+            sleep(1);
+            $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
+
+            return [
+                'status'    => true,
+                'message'   => 'leave chat success'
+            ];
+        }
+
+        return [
+            'status'    => false,
+            'message'   => 'Continue room'
+        ];
     }
 
     private function _identityEvent($events = []){
