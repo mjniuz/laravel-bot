@@ -214,6 +214,9 @@ class LineService{
         if(count($events) == 1 AND !empty($events[0]['type'])){
             $type   = $events[0]['type'];
 
+            if(empty($events[0]['message']['text'])){
+                Log::critical($events);
+            }
             switch ($type){
                 case 'text':
                     return [
