@@ -17,6 +17,13 @@ class MessageBuilderService{
         return $msgResponse;
     }
 
+    public function haveRoomAlready(){
+        $text   = "Kamu masih di dalam room sama temen random mu ya, ketik /leave untuk keluar room";
+        $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text);
+
+        return $msgResponse;
+    }
+
     public function leaveMessage(){
         $text   = 'Anda telah keluar dari chat room';
         $msgResponse    = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text);
