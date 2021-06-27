@@ -185,7 +185,7 @@ class LineService{
                     return [
                         'status'    => true,
                         'type'      => 'postback',
-                        'data'      => $events[0]['message']['data'],
+                        'data'      => $events[0]['postback']['data'],
                         'replyToken'    => $events[0]['replyToken']
                     ];
 
