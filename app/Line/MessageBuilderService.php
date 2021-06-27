@@ -73,7 +73,7 @@ class MessageBuilderService{
         foreach ($actions as $action){
             $postbackAction[] = new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder($action['label'],$action['text']);
         }
-        $buildTemplate  = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder($title, $actions);
+        $buildTemplate  = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ConfirmTemplateBuilder($title, $postbackAction);
         $msgResponse    = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder($title,$buildTemplate);
 
         return $msgResponse;
