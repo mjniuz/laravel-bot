@@ -107,6 +107,7 @@
       <find>Log</find>
       <find>Slack</find>
       <find>more than</find>
+      <find>ype not a message</find>
     </findStrings>
   </component>
   <component name="Git.Settings">

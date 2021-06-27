@@ -111,7 +111,7 @@ class LineService{
 
     private function _processMessage($events, $user){
         $messageData    = $this->_identityMessage($events);
-        if($messageData['data'] == false){
+        if($messageData['status'] == false){
             return $messageData;
         }
 
