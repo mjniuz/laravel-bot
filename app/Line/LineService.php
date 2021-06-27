@@ -153,9 +153,7 @@ class LineService{
         }
 
         // if not in active room and new user
-
-
-        return true;
+        return $this->_sendMessage($user->line_id, 'builder', $this->builder->introButton());
     }
 
     private function _identityEvent($events = []){
