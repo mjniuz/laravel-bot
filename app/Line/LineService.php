@@ -22,7 +22,7 @@ class LineService{
 
         // Check user detail
         $userData   = $this->_identityUser($events);
-        if($userData['data']== false){
+        if($userData['status']== false){
             return $userData;
         }
         $user       = $this->user->createUpdateUser($userData['data']);
