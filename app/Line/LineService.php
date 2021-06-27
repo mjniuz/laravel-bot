@@ -143,7 +143,7 @@ class LineService{
         if($stillWaitingOpponent){
             $isWannaLeave   = $this->_isWannaLeave($stillWaitingOpponent, $user, $message);
             // But wanna leave
-            if($isWannaLeave['data']){
+            if($isWannaLeave['status']){
                 return $isWannaLeave;
             }
 
