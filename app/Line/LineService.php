@@ -63,6 +63,13 @@ class LineService{
         }
 
         $postback   = $messageData['data'];
+
+        // already have available room
+        $availableRoom  = $this->room->findAvailableRoom($user->line_id);
+        if($availableRoom){
+            return $this->_sendMessage($user->line_id, 'text', $this->builder->stillWaiting());
+        }
+
         if($postback == 'searching'){
             // find available room or create it if no one
             $findJoinRoom  = $this->room->createJoinRoom($user->line_id);
