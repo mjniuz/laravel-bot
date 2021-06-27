@@ -206,10 +206,17 @@ class LineService{
 
     private function _identityUser($events = []){
         if(count($events) == 1 AND !empty($events[0]['type'])){
-            if($events[0]['type'] !== 'message'){
+            /*if($events[0]['type'] !== 'message'){
                 return [
                     'status'    => false,
                     'message'   => "type not a message"
+                ];
+            }*/
+
+            if(empty($events[0]['source']['type'])){
+                return [
+                    'status'    => false,
+                    'message'   => "type undefined"
                 ];
             }
 
