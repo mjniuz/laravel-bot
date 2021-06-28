@@ -21,6 +21,9 @@ class StartController extends BaseController
     public function start(Request $request){
         $events     = $request->get('events');
         $iMessage   = $this->line->start($events);
+        if(empty($iMessage['status'])){
+            Log::critical(json_encode([$events, $iMessage]));
+        }
         if($iMessage['status'] !== true){
             Log::critical(json_encode([$events, $iMessage]));
         }
