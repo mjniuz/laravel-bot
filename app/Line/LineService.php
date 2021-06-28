@@ -316,7 +316,7 @@ class LineService{
 
         return [
             'status'    => false,
-            'message'   => 'no success get profile ' . json_decode($response)
+            'message'   => 'no success get profile ' . json_encode($response)
         ];
     }
 
