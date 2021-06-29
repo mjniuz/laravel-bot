@@ -23,6 +23,10 @@ class StartController extends BaseController
         $iMessage   = $this->line->start($events);
         if(empty($iMessage['status'])){
             Log::critical(json_encode([$events, $iMessage]));
+
+            return response()->json([
+                'status'    => 'not ok'
+            ]);
         }
         if($iMessage['status'] !== true){
             Log::critical(json_encode([$events, $iMessage]));
